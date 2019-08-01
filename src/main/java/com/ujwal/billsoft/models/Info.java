@@ -25,5 +25,6 @@ public class Info {
 	public String toString() {
 		return "Info [message=" + message + ", error=" + error + "]";
 	}
+	
 
 }
