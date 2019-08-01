@@ -1208,7 +1208,7 @@ public void showPDF(HttpServletRequest request, HttpServletResponse response) {
 	String appPath = context.getRealPath("");
 	String filename = "ordermemo221.pdf";
 	
-	//String filePath = "/home/maddy/ats-12/bill.pdf";	// pdf on local
+	///String filePath = "/home/maddy/ats-12/bill.pdf";	// pdf on local
 	String filePath = "/home/tomcataaryatechi/powerdairy.aaryatechindia.in/tomcat-8.0.18/webapps/ujwal/bill.pdf";
 			
 	String fullPath = appPath + filePath;
