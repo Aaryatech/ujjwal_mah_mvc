@@ -81,7 +81,7 @@ public class UjwalBillReportController {
 			rest = new RestTemplate();
 		List<MCompany> compList = rest.getForObject(Constants.url + "/ujwal/getAllCompanies", List.class);
 		
-		System.out.println(compList);
+		//System.out.println(compList);
 		mav.addObject("compList", compList);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
@@ -103,7 +103,7 @@ public class UjwalBillReportController {
 		int locationId = (int)session.getAttribute("locationId");
 		
 
-		System.out.println("Datesss"+fromDate +"  "+toDate+"  "+compId+" "+locationId);
+		//System.out.println("Datesss"+fromDate +"  "+toDate+"  "+compId+" "+locationId);
 
 		map.add("fromDate",DateConvertor.convertToYMD(fromDate));
 		map.add("toDate",DateConvertor.convertToYMD(toDate));
@@ -174,7 +174,7 @@ public class UjwalBillReportController {
 			rest = new RestTemplate();
 		List<MCompany> compList = rest.getForObject(Constants.url + "/ujwal/getAllCompanies", List.class);
 		
-		System.out.println(compList);
+		//System.out.println(compList);
 		mav.addObject("compList", compList);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
@@ -194,7 +194,7 @@ public class UjwalBillReportController {
 		int compId =Integer.parseInt(request.getParameter("compId"));
 		
 
-		System.out.println(fromDate +"  "+toDate);
+		//System.out.println(fromDate +"  "+toDate);
 
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
@@ -205,7 +205,7 @@ public class UjwalBillReportController {
 		
 		MonthlyReport[] ordHeadArray = rest.postForObject(Constants.url + "/getMonthlyBetweenDate", map,MonthlyReport[].class);
 		getL = new ArrayList<MonthlyReport>(Arrays.asList(ordHeadArray));
-		System.out.println("SDF: "+getL);
+		//System.out.println("SDF: "+getL);
 		
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -258,13 +258,13 @@ public class UjwalBillReportController {
 	public void showCompanywisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("compId") int compId,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
-		System.out.println("Inside Pdf showCompanywisePdf");
+		//System.out.println("Inside Pdf showCompanywisePdf");
 		Document document = new Document(PageSize.A4);
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 
-		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		//System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
 		String FILE_PATH = Constants.REPORT_SAVE;
 		File file = new File(FILE_PATH);
 
@@ -281,7 +281,7 @@ public class UjwalBillReportController {
 
 		PdfPTable table = new PdfPTable(10);
 		try {
-			System.out.println("Inside PDF Table try");
+			//System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
 			table.setWidths(new float[] { 2.4f, 3.2f, 4.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
@@ -446,7 +446,7 @@ public class UjwalBillReportController {
 
 			int totalPages = writer.getPageNumber();
 
-			System.out.println("Page no " + totalPages);
+			//System.out.println("Page no " + totalPages);
 
 			document.close();
 
@@ -490,13 +490,13 @@ public class UjwalBillReportController {
 	public void showCustomerwisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
-		System.out.println("Inside Pdf showCustomerwisePdf");
+		//System.out.println("Inside Pdf showCustomerwisePdf");
 		Document document = new Document(PageSize.A4);
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 
-		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		//System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
 		String FILE_PATH = Constants.REPORT_SAVE;
 		File file = new File(FILE_PATH);
 
@@ -513,7 +513,7 @@ public class UjwalBillReportController {
 
 		PdfPTable table = new PdfPTable(10);
 		try {
-			System.out.println("Inside PDF Table try");
+			//System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
 			table.setWidths(new float[] { 2.4f, 3.4f, 4.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
@@ -682,7 +682,7 @@ public class UjwalBillReportController {
 
 			int totalPages = writer.getPageNumber();
 
-			System.out.println("Page no " + totalPages);
+			//System.out.println("Page no " + totalPages);
 
 			document.close();
 
@@ -820,7 +820,7 @@ public class UjwalBillReportController {
 			mav.addObject("custList", custList);	*/
 			List<MCompany> compList = rest.getForObject(Constants.url + "/ujwal/getAllCompanies", List.class);
 			
-			System.out.println("Cst:"+compList);
+			//System.out.println("Cst:"+compList);
 			mav.addObject("compList", compList);
 			
 			HttpSession session = request.getSession();
@@ -850,7 +850,7 @@ public class UjwalBillReportController {
 		int custId =Integer.parseInt(request.getParameter("custId"));
 		int compId =Integer.parseInt(request.getParameter("compId"));
 		
-		System.out.println(custId+" "+fromDate +"  "+toDate+" "+compId);
+		//System.out.println(custId+" "+fromDate +"  "+toDate+" "+compId);
 
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
@@ -860,7 +860,7 @@ public class UjwalBillReportController {
 		
 		CustReport[] ordHeadArray = rest.postForObject(Constants.url + "/ujwal/getCustomerBetweenDate", map,CustReport[].class);
 		getListnew = new ArrayList<CustReport>(Arrays.asList(ordHeadArray));
-		System.out.println("Customer List: "+getListnew);
+		//System.out.println("Customer List: "+getListnew);
 		
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -957,7 +957,7 @@ public @ResponseBody List<BillExcell> billtoExcel(HttpServletRequest request,
 	String fromDate = request.getParameter("fromDate");
 	String toDate = request.getParameter("toDate");
 	
-	System.out.println("Datesss"+fromDate +"  "+toDate+"  "+userResponse.getLocationId());
+	//System.out.println("Datesss"+fromDate +"  "+toDate+"  "+userResponse.getLocationId());
 
 	map.add("fromDate",DateConvertor.convertToYMD(fromDate));
 	map.add("toDate",DateConvertor.convertToYMD(toDate));
@@ -1009,7 +1009,7 @@ public @ResponseBody List<BillExcell> billtoExcel(HttpServletRequest request,
 	DecimalFormat df = new DecimalFormat("#.##");
 	for (int i = 0; i < billexcelList.size(); i++) {
 		expoExcel = new ExportToExcel();
-		rowData = new ArrayList<String>();					
+		rowData = new ArrayList<String>();		
 		
 		float igstPer=0;
 		float sgstPer=0;
@@ -1039,8 +1039,7 @@ public @ResponseBody List<BillExcell> billtoExcel(HttpServletRequest request,
 		int samState = billexcelList.get(i).getIsSameState();
 		
 		float igstper=billexcelList.get(i).getSgstPer()+ billexcelList.get(i).getCgstPer();
-		float igstAmt=dfcgst+dfsgst;
-		
+		float igstAmt=dfcgst+dfsgst;		
 		
 		if(samState==1) {
 			igst = 0;
@@ -1088,13 +1087,16 @@ public @ResponseBody List<BillExcell> billtoExcel(HttpServletRequest request,
 		rowData.add("" + igst);		//igst
 		
 		
-		System.out.println("Total Sum:"+ttlAmt+" "+roundFig);
-		float roundOff=(roundFig-ttlAmt);
-		//double d = roundOff;
-	
-		//String decimalRndOff= df.format(d);
-		rowData.add("" + round(roundOff,2));
+		//System.out.println("Total Sum:"+billexcelList.get(i).getInvoiceNo()+" "+ttlAmt+" "+roundFig);
 		
+	//	float roundOff=(roundFig-ttlAmt);	//01/08/2019
+		
+		float calAmt=billexcelList.get(i).getTaxableAmt()+billexcelList.get(i).getSgstAmt()+billexcelList.get(i).getCgstAmt();
+		float rundCalAmt=Math.round(calAmt);
+		float ttlCalAmt=rundCalAmt-calAmt;
+		
+		//rowData.add("" + round(roundOff,2));	//01/08/2019
+		rowData.add("" + round(ttlCalAmt,2));
 		rowData.add("" + roundFig);
 
 		rowData.add("" + "NA");
@@ -1126,10 +1128,10 @@ public ModelAndView showCustList(HttpServletRequest request, HttpServletResponse
 	HttpSession session = request.getSession();
 	MUser userResponse = (MUser) session.getAttribute("userBean");
 		
-	System.out.println("User Cred="+userResponse.getUserName()+" "+userResponse.getCompanyId()+" "+userResponse.getUserId());
+	//System.out.println("User Cred="+userResponse.getUserName()+" "+userResponse.getCompanyId()+" "+userResponse.getUserId());
 	
 	int companyId = userResponse.getCompanyId();
-	System.out.println("Compannyy IDSS = "+companyId);
+	//System.out.println("Compannyy IDSS = "+companyId);
 	
 	
 	MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -1139,7 +1141,7 @@ public ModelAndView showCustList(HttpServletRequest request, HttpServletResponse
 	List<GetCustomerTally> custList = new ArrayList<>();
 	GetCustomerTally[] customers = rest.postForObject(Constants.url + "/getAllCustomerDetailsForTally",map, GetCustomerTally[].class);
 	custList = new ArrayList<GetCustomerTally>(Arrays.asList(customers));
-	System.out.println("SDF: "+custList);
+	//System.out.println("SDF: "+custList);
 	
 	mav.addObject("custList", custList);
 	mav.addObject("title", "Customers List");
