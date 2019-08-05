@@ -200,8 +200,8 @@ function validate(){
 									<div class="col-md-4">
 										 <select name="extraTax" id="extraTax" class="standardSelect" tabindex="6" required  > 
 											<option value="">Tax Excluded</option>
-											<option value="0">No</option>
-											<option value="1">Yes</option>
+											<option value="0" ${editModel.extraTax==0 ? 'Selected' : ''} >No</option>
+											<option value="1" ${editModel.extraTax==1 ? 'Selected' : ''}>Yes</option>
 										</select>
 										
 									</div>
