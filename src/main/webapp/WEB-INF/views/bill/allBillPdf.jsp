@@ -78,8 +78,8 @@
 						style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 						GSTIN/UIN : ${billHeaderRes.custGstn}</p>
 					<p
-						style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
-						: Maharashtra, Code: 27</p>
+						style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Address
+						: ${billHeaderRes.custAddress}</p>
 					<p
 						style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Contact
 						: ${billHeaderRes.custPhone}</p>

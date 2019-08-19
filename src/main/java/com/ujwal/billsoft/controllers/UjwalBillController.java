@@ -1190,7 +1190,7 @@ public void showPDF(HttpServletRequest request, HttpServletResponse response) {
 	System.out.println("URL " + url);
 	
 	//File f = new File("/home/maddy/ats-12/bill.pdf");	// pdf on local
-	File f = new File("/home/tomcataaryatechi/powerdairy.aaryatechindia.in/tomcat-8.0.18/webapps/ujwal/bill.pdf");
+	File f = new File(Constants.REPORT_SAVE);
 	
 
 	System.out.println("I am here " + f.toString());
@@ -1208,8 +1208,8 @@ public void showPDF(HttpServletRequest request, HttpServletResponse response) {
 	String appPath = context.getRealPath("");
 	String filename = "ordermemo221.pdf";
 	
-	///String filePath = "/home/maddy/ats-12/bill.pdf";	// pdf on local
-	String filePath = "/home/tomcataaryatechi/powerdairy.aaryatechindia.in/tomcat-8.0.18/webapps/ujwal/bill.pdf";
+	//String filePath = "/home/maddy/ats-12/bill.pdf";	// pdf on local
+	String filePath = Constants.REPORT_SAVE;
 			
 	String fullPath = appPath + filePath;
 	File downloadFile = new File(filePath);
