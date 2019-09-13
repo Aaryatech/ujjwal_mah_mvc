@@ -247,7 +247,7 @@
 						style="border-left: 1px solid #313131; padding: 3px 5px 10px; color: #000; font-size: 10px;">${count.index+1}</td>
 					<td
 						style="border-left: 1px solid #313131; padding: 3px 5px 10px; color: #000; font-size: 10px;">${billDetails.partName}
-						- ${billDetails.exVar2}</td>
+						</td><!-- - ${billDetails.exVar2} -->
 					<td align="left"
 						style="border-left: 1px solid #313131; padding: 3px 5px 10px;; color: #000; font-size: 10px;">${billDetails.hsnCode}</td>
 					<td align="left"
