@@ -7,7 +7,7 @@
 
 		<div class="header-menu">
 
-			<div class="col-sm-7">
+			<div class="col-sm-9">
 				<a id="menuToggle" class="menutoggle pull-left"><i
 					class="fa fa fa-tasks"></i></a>
 				<div class="header-left">
@@ -84,7 +84,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-5">
+			<div class="col-sm-3">
 				<div class="user-area dropdown float-right">
 
 					<div align="right"

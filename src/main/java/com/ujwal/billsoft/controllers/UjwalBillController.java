@@ -76,42 +76,43 @@ public class UjwalBillController {
 		detailList = new ArrayList<BillDetails>();
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = new Date();		
-		List<MCompany> compList = rest.getForObject(Constants.url + "/ujwal/getAllCompanies", List.class);
-		mav.addObject("compList", compList);
+//		List<MCompany> compList = rest.getForObject(Constants.url + "/ujwal/getAllCompanies", List.class);
+//		mav.addObject("compList", compList);
 		
 		HttpSession session = request.getSession();
 		MUser userResponse = (MUser) session.getAttribute("userBean");
+		
+		System.out.println(userResponse.getCompanyId());
 			
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-		map.add("id", userResponse.getCompanyId());
 		
-		List<MCustomer> custList = rest.postForObject(Constants.url + "/ujwal/getCustomerByCompId",map, List.class);
-		System.out.println("Response List= "+custList);
-		mav.addObject("custList", custList);
-		
-		map = new LinkedMultiValueMap<>();
 		map.add("companyId", userResponse.getCompanyId());
-		MModelBean[] mModelBean = rest.postForObject(Constants.url+ "/ujwal/getModelByCompanyId",map, MModelBean[].class);
 		
+		MCustomer[] custArr = rest.postForObject(Constants.url + "/ujwal/getCustomerListForBill",map, MCustomer[].class);		
+		List<MCustomer> custList = new ArrayList<MCustomer>(Arrays.asList(custArr));
+		mav.addObject("custList", custList);
+				
+		MModelBean[] mModelBean = rest.postForObject(Constants.url+ "/ujwal/getModelListForBill",map, MModelBean[].class);		
 		modelList = new ArrayList<>(Arrays.asList(mModelBean));
 		mav.addObject("modelList", modelList);
-	/*	
-		List<MPart> partList = rest.getForObject(Constants.url + "/ujwal/getAllPartByCompanyId", List.class);
-		mav.addObject("pList", partList);
+	
+		/*List<MPart> partList = rest.getForObject(Constants.url + "/ujwal/getAllPartByCompanyId", List.class);
+		mav.addObject("pList", partList);*/
 		
-		*/
+		
 		mav.addObject("date", dateFormat.format(date));
 		mav.addObject("title", "Add Bill");
 		mav.addObject("user",userResponse);
 		mav.addObject("companyId", userResponse.getCompanyId());
 		mav.addObject("isEditBill",0);
-		 map = new LinkedMultiValueMap<String, Object>();
+		map = new LinkedMultiValueMap<String, Object>();
 	
 		map.add("docCode", 1);
 		map.add("locationId", userResponse.getLocationId());
 	
 		Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
 		mav.addObject("doc", doc);
+		
 		DateFormat df = new SimpleDateFormat("yy"); // Just the year, with 2 digits
 		     int year = Integer.parseInt(df.format(Calendar.getInstance().getTime()));
             String yearFin="";
@@ -175,14 +176,15 @@ public @ResponseBody MGetPart getPartById(HttpServletRequest request, HttpServle
 @RequestMapping(value = "/getPartListByModelId", method = RequestMethod.GET)
 public @ResponseBody List<MPart> getPartListByModelId(HttpServletRequest request, HttpServletResponse response) {
 	
-	List<MPart> partList=null;
-	try {
-		
+	List<MPart> partList= new ArrayList<MPart>();
+	try {		
 		int modelId = Integer.parseInt(request.getParameter("modelId"));
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("modelId", modelId);
-		 partList = rest.postForObject(Constants.url + "/ujwal/getAllPartByModelId",map, List.class);
+		MPart[] partArr = rest.postForObject(Constants.url + "/ujwal/getPartListForBill",map, MPart[].class);
+		partList= new ArrayList<MPart>(Arrays.asList(partArr));
+		//getAllPartByModelId
 	}
 	catch (Exception e) {
 		e.printStackTrace();

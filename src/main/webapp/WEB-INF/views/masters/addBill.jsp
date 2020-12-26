@@ -288,7 +288,7 @@
 									<div class="col-md-4">
 										<input type="text" id="cust_phone" name="cust_phone" style="height:30px;"
 											style="width: 100%;" class="form-control"
-											value="" autocomplete="off"
+											value="" autocomplete="off" maxlength="10"
 										 />
 										<span class="error" aria-live="polite"></span>
 
@@ -666,29 +666,21 @@ $(function () {
 </script>
 
 	<script>
-	$("#part_mrp").on("keypress keyup blur",function (event) {
-        //this.value = this.value.replace(/[^0-9\.]/g,'');
- $(this).val($(this).val().replace(/[^0-9\.]/g,''));
-        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-            event.preventDefault();
-        }
-    });
+	$('#part_mrp').on('input', function() {
+		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		});
 	
-	$("#disc").on("keypress keyup blur",function (event) {
-        //this.value = this.value.replace(/[^0-9\.]/g,'');
- $(this).val($(this).val().replace(/[^0-9\.]/g,''));
-        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-            event.preventDefault();
-        }
-    });
+	$('#disc').on('input', function() {
+		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		});
 	
-	$("#qty").on("keypress keyup blur",function (event) {
-        //this.value = this.value.replace(/[^0-9\.]/g,'');
- $(this).val($(this).val().replace(/[^0-9\.]/g,''));
-        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-            event.preventDefault();
-        }
-    });
+	$('#qty').on('input', function() {
+		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		});
+	
+	$('#cust_phone').on('input', function() {
+		 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+		});
 	
 	</script>
 	`
