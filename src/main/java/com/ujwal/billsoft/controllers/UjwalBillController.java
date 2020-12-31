@@ -57,6 +57,7 @@ import com.ujwal.billsoft.models.MUser;
 import com.ujwal.billsoft.models.TaxBillBean;
 import com.ujwal.billsoft.models.Document;
 import com.ujwal.billsoft.models.GetBillHeader;
+import com.ujwal.billsoft.models.GetPartsForBill;
 import com.ujwal.billsoft.models.Info;
 @Controller
 @Scope("session")
@@ -67,6 +68,9 @@ public class UjwalBillController {
 	List<BillDetails> detailList = new ArrayList<BillDetails>();
 	BillHeader billHeader=new BillHeader();
 	List<MModelBean> modelList = new ArrayList<>();
+	
+//	List<MPart> partList= new ArrayList<MPart>();
+	List<GetPartsForBill> partList= new ArrayList<GetPartsForBill>();
 	
 	@RequestMapping(value="/showAddBill", method=RequestMethod.GET)
 	public ModelAndView addShowBillForm(HttpServletRequest request, HttpServletResponse response) {
@@ -95,10 +99,6 @@ public class UjwalBillController {
 		MModelBean[] mModelBean = rest.postForObject(Constants.url+ "/ujwal/getModelListForBill",map, MModelBean[].class);		
 		modelList = new ArrayList<>(Arrays.asList(mModelBean));
 		mav.addObject("modelList", modelList);
-	
-		/*List<MPart> partList = rest.getForObject(Constants.url + "/ujwal/getAllPartByCompanyId", List.class);
-		mav.addObject("pList", partList);*/
-		
 		
 		mav.addObject("date", dateFormat.format(date));
 		mav.addObject("title", "Add Bill");
@@ -127,6 +127,9 @@ public class UjwalBillController {
 	     mav.addObject("srNo",String.format("%05d", doc.getSrNo()));
 
 		System.err.println(doc.toString()+"getDocument");
+		
+		GetPartsForBill[] partArr = rest.getForObject(Constants.url + "/ujwal/getAllVehPart", GetPartsForBill[].class);
+		partList = new ArrayList<GetPartsForBill>(Arrays.asList(partArr));
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -171,25 +174,27 @@ public @ResponseBody MGetPart getPartById(HttpServletRequest request, HttpServle
 
 }
 
-
-
 @RequestMapping(value = "/getPartListByModelId", method = RequestMethod.GET)
-public @ResponseBody List<MPart> getPartListByModelId(HttpServletRequest request, HttpServletResponse response) {
+public @ResponseBody List<GetPartsForBill> getPartListByModelId(HttpServletRequest request, HttpServletResponse response) {
 	
-	List<MPart> partList= new ArrayList<MPart>();
-	try {		
+	List<GetPartsForBill> newPartList = new ArrayList<GetPartsForBill>();
+	try {	
+		
 		int modelId = Integer.parseInt(request.getParameter("modelId"));
-
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		map.add("modelId", modelId);
-		MPart[] partArr = rest.postForObject(Constants.url + "/ujwal/getPartListForBill",map, MPart[].class);
-		partList= new ArrayList<MPart>(Arrays.asList(partArr));
-		//getAllPartByModelId
+	
+		for (int i = 0; i < partList.size(); i++) {
+			
+			if(Integer.parseInt(partList.get(i).getPartRoNo())==modelId)
+			{
+				newPartList.add(partList.get(i));
+			}
+			
+		}
 	}
 	catch (Exception e) {
 		e.printStackTrace();
 	}
-	return partList;
+	return newPartList;
 
 }
 @RequestMapping(value = "/editBill/{billHeadId}", method = RequestMethod.GET)
