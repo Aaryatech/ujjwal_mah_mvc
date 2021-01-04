@@ -96,7 +96,7 @@ public class UjwalBillController {
 		List<MCustomer> custList = new ArrayList<MCustomer>(Arrays.asList(custArr));
 		mav.addObject("custList", custList);
 				
-		MModelBean[] mModelBean = rest.postForObject(Constants.url+ "/ujwal/getModelListForBill",map, MModelBean[].class);		
+		MModelBean[] mModelBean = rest.postForObject(Constants.url+ "/ujwal/getModelByCompanyId",map, MModelBean[].class);		
 		modelList = new ArrayList<>(Arrays.asList(mModelBean));
 		mav.addObject("modelList", modelList);
 		
@@ -147,7 +147,6 @@ public @ResponseBody MCustomer getCustById(HttpServletRequest request, HttpServl
 	map.add("id", custId);
 	cust = rest.postForObject(Constants.url + "/ujwal/getCustomerById", map, MCustomer.class);
 
-	System.err.println("Cust" + cust.toString());
 	}
 	catch (Exception e) {
 		e.printStackTrace();
@@ -264,12 +263,13 @@ public @ResponseBody String findModelId(HttpServletRequest request,HttpServletRe
 	try {
 		int modelId=0;
 		modelId = Integer.parseInt(request.getParameter("modelId"));
-		 System.out.println("Value TAxxxxx="+modelId);
+		
 		MultiValueMap< String, Object> map = new LinkedMultiValueMap<>();
 		map.add("id", modelId);
 		MModelBean modb = rest.postForObject(Constants.url + "/ujwal/getModelById", map, MModelBean.class);
 	    extraTax=String.valueOf(modb.getExtraTax());
-	    System.out.println("Value TAx="+extraTax);
+	   
+	    
 	}catch(Exception e){
 		System.out.println(e);
 	}
@@ -282,7 +282,6 @@ public @ResponseBody String findModelId(HttpServletRequest request,HttpServletRe
 
 	@RequestMapping(value = "/addPartDetail", method = RequestMethod.GET)
 	public @ResponseBody List<BillDetails> addPartDetail(HttpServletRequest request,HttpServletResponse response) {
-	
 	
 	try {
 			int modelId = 0;
@@ -297,7 +296,7 @@ public @ResponseBody String findModelId(HttpServletRequest request,HttpServletRe
 			float discPer =Float.parseFloat(request.getParameter("disc"));
 			modelId = Integer.parseInt(request.getParameter("modelId"));
 			String saleType = request.getParameter("sale_type");
-			System.out.println("Sale Type="+saleType); 
+
 			 
 			int flag=0;
 			
@@ -306,73 +305,64 @@ public @ResponseBody String findModelId(HttpServletRequest request,HttpServletRe
 				if(modelId==modelList.get(i).getModelId()) {
 					
 					flag = modelList.get(i).getExtraTax();
-					System.out.println("Flag Data="+flag);
 					
 				}
 				
 			}
-			System.out.println("Flag Data="+flag);
-			System.out.println("tempList = partId: "+partId+" index: "+index+" qty: "+qty+" isEdit: "+isEdit+" partMrp: "+partMrp+" disc"+discPer+" saleType"+saleType);
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("id", partId);
 			MGetPart parttax = rest.postForObject(Constants.url + "GetPartInfo", map, MGetPart.class);
 			if(flag==1) {
+				
 				 mrpBaseRate=partMrp;
 				 mrpBaseRate=roundUp(mrpBaseRate);
-					System.out.println("Base Rate without tax: "+mrpBaseRate);
+
 			}else {
+				
 			mrpBaseRate=(partMrp*100)/(100+parttax.getCgstPer()+parttax.getSgstPer());
 			//mrpBaseRate=roundUp(mrpBaseRate);
-			System.out.println("Base Rate with tax: "+mrpBaseRate);
+
 			}
 			//mrpBaseRate=roundUp(mrpBaseRate);
-			System.out.println("Base Rate: "+mrpBaseRate);
 			
 			float taxableAmt =  mrpBaseRate * qty;	
-			System.out.println("taxableAmt: "+taxableAmt);
+
 			
-			float discAmt = ((taxableAmt * discPer) / 100);		
-			System.out.println("discAmt: "+discAmt);
+			float discAmt = ((taxableAmt * discPer) / 100);
+
 			
 			taxableAmt = taxableAmt - discAmt;	
-			System.out.println("taxableAmt: "+taxableAmt);
+
 
 			float sgstRs = (taxableAmt * parttax.getSgstPer()) / 100;		
 			sgstRs=roundUp(sgstRs);
-			System.out.println("sgstRs: "+sgstRs);
+
 			
 			float cgstRs = (taxableAmt * parttax.getCgstPer()) / 100;	
 			cgstRs=roundUp(cgstRs);
-			System.out.println("cgstRs: "+cgstRs);
+
 			
 			float igstRs = (taxableAmt * parttax.getIgstPer()) / 100;		
 			igstRs=roundUp(igstRs);
-			//System.out.println("igstRs: "+igstRs);
+
 			
 			float cessRs = (taxableAmt * parttax.getCessPer()) / 100;		
 			cessRs=roundUp(cessRs);
-			System.out.println("cessRs: "+cessRs);
+
 			
 			float totalTax = sgstRs + cgstRs;
-			System.out.println("totalTax: "+totalTax);		
-			
-		
-			
+
 			//discAmt=roundUp(discAmt);
-			System.out.println("discAmt: "+discAmt);	
 			
 			taxableAmt=roundUp(taxableAmt);	
-			System.out.println("taxableAmt: "+taxableAmt);	
 			
-			float grandTotal = totalTax + taxableAmt;		
-			System.out.println("grandTotal: "+grandTotal);	
+			float grandTotal = totalTax + taxableAmt;	
+
 			
-			//grandTotal=roundUp(grandTotal);
-			System.out.println("grandTotal: "+grandTotal);	
-				
+			//grandTotal=roundUp(grandTotal);				
 			//grandTotal=(float) Math.ceil((double)grandTotal);
-			System.out.println("grandTotal2: "+grandTotal);	
+
 			if(isEdit==1)
 			{/*  
 				detailList.get(index).setBillDetailId(0);

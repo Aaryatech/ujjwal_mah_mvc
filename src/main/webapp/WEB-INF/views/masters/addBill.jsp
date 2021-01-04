@@ -742,7 +742,7 @@ $(function () {
 			function getCompId() { 
 		
 			var compId = document.getElementById("compId").value;
-			alert("id="+compId);
+			
 			var valid = true;
 			if (compId == null || compId == "") {
 				valid = false;
