@@ -249,6 +249,9 @@ public ModelAndView editBill(HttpServletRequest request, HttpServletResponse res
 		model.addObject("isEditBill", 1);
 		model.addObject("companyId", billHeader.getCompanyId());
 		model.addObject("title", "Edit Bill");
+		
+		GetPartsForBill[] partArr = rest.getForObject(Constants.url + "/ujwal/getAllVehPart", GetPartsForBill[].class);
+		partList = new ArrayList<GetPartsForBill>(Arrays.asList(partArr));
 
 	} catch (Exception e) {
 		System.err.println("Exce in edit Bill " + e.getMessage());
