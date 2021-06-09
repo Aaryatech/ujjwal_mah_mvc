@@ -239,9 +239,12 @@ public ModelAndView editBill(HttpServletRequest request, HttpServletResponse res
 		
 	/*	List<MPart> partList = rest.getForObject(Constants.url + "/ujwal/getAllPart", List.class);
 		model.addObject("pList", partList);*/
+		
 		map = new LinkedMultiValueMap<>();
 		map.add("companyId", billHeader.getCompanyId());
-		List<MModelBean> modelList = rest.postForObject(Constants.url+ "/ujwal/getModelByCompanyId",map, List.class);
+//		List<MModelBean> modelList = rest.postForObject(Constants.url+ "/ujwal/getModelByCompanyId",map, List.class);
+		MModelBean[] modelArr = rest.postForObject(Constants.url+ "/ujwal/getModelByCompanyId",map, MModelBean[].class);
+		modelList = new ArrayList<MModelBean>(Arrays.asList(modelArr));		
 		model.addObject("modelList", modelList);
 	
 		model.addObject("date",bill.getBillDate());		
